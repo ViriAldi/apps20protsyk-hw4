@@ -11,8 +11,8 @@ public class TreeNode<T> {
         next = new TreeNode[treeType];
     }
 
-    public void setNext(int i, T item) {
-        next[i] = new TreeNode(item, treeType);
+    public void setNext(int i, T newItem) {
+        next[i] = new TreeNode(newItem, treeType);
     }
 
     public TreeNode<T> getNext(int i) throws IndexOutOfBoundsException {

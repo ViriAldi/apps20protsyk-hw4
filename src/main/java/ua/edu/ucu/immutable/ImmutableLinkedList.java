@@ -29,7 +29,9 @@ public class ImmutableLinkedList<T> implements ImmutableList<T> {
 
     }
 
-    private ImmutableLinkedList(Node<T> initHead, Node<T> initTail, int initSize) {
+    private ImmutableLinkedList(
+            Node<T> initHead, Node<T> initTail, int initSize
+    ) {
         size = initSize;
         head = initHead;
         iterator = new LinkedListIterator<T>(initHead);

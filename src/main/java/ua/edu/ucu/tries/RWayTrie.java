@@ -6,9 +6,10 @@ import ua.edu.ucu.mutable.Queue;
 import java.util.ArrayList;
 
 public class RWayTrie implements Trie {
+    private static int TRIE_TYPE = 26;
+    private static char ASCII_CHAR = 'a';
+
     private TreeNode<Tuple> root;
-    public static int TRIE_TYPE = 26;
-    public static char ASCII_CHAR = 'a';
     private int size = 0;
 
     public RWayTrie() {
@@ -20,7 +21,7 @@ public class RWayTrie implements Trie {
         String string = t.term;
         String lastChar = string.substring(string.length() - 1);
         TreeNode<Tuple> treeNode = goTo(string, true);
-        if (treeNode.getItem().weight == 0){
+        if (treeNode.getItem().weight == 0) {
             treeNode.setItem(new Tuple(lastChar, string.length()));
             size += 1;
         }
@@ -65,12 +66,15 @@ public class RWayTrie implements Trie {
         return wordsWithPrefix("");
     }
 
-    private void words(Queue<TreeNode<Tuple>> queue, String currWord, ArrayList<String> words) {
+    private void words(
+            Queue<TreeNode<Tuple>> queue,
+            String currWord, ArrayList<String> words
+    ) {
         TreeNode<Tuple> currNode = queue.dequeue();
         if (currNode.getItem().weight != 0) {
             words.add(currWord);
         }
-        for (int i = 0; i < TRIE_TYPE; i++){
+        for (int i = 0; i < TRIE_TYPE; i++) {
             if (currNode.getNext(i) != null) {
                 queue.enqueue(currNode.getNext(i));
                 words(
