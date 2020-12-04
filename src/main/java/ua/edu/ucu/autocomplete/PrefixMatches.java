@@ -1,40 +1,66 @@
 package ua.edu.ucu.autocomplete;
 
 import ua.edu.ucu.tries.Trie;
+import ua.edu.ucu.tries.Tuple;
 
-/**
- *
- * @author andrii
- */
+import java.util.ArrayList;
+
 public class PrefixMatches {
 
     private Trie trie;
 
-    public PrefixMatches(Trie trie) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public PrefixMatches(Trie initTrie) {
+        trie = initTrie;
     }
 
     public int load(String... strings) {
-        throw new UnsupportedOperationException("Not supported yet.");        
+        int errors = 0;
+        for (String string: strings) {
+            String[] words = string.split(" ");
+            for (String w: words) {
+                if (w.length() > 2) {
+                    try {
+                        trie.add(new Tuple(w, w.length()));
+                    }
+                    catch (IndexOutOfBoundsException e) {
+                        errors += 1;
+                    }
+                }
+            }
+        }
+        return errors;
     }
 
     public boolean contains(String word) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return trie.contains(word);
     }
 
     public boolean delete(String word) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return trie.delete(word);
     }
 
     public Iterable<String> wordsWithPrefix(String pref) {
-        throw new UnsupportedOperationException("Not supported yet.");        
+        if (pref.length() < 2) {
+            return null;
+        }
+        return trie.wordsWithPrefix(pref);
     }
 
     public Iterable<String> wordsWithPrefix(String pref, int k) {
-        throw new UnsupportedOperationException("Not supported yet.");        
+        if (pref.length() < 2) {
+            return null;
+        }
+        int maxLength = k + pref.length() - 1;
+        ArrayList<String> filtered = new ArrayList();
+        for (String string: trie.wordsWithPrefix(pref)) {
+            if (string.length() <= maxLength) {
+                filtered.add(string);
+            }
+        }
+        return filtered;
     }
 
     public int size() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return trie.size();
     }
 }
